@@ -8,37 +8,30 @@ import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
-class ReadInputFileReg {
+public class ReadInputFileReg {
+
+    private static final String FILE_PATH = "./src/test/java/com/loonycorn/learningselenium/store/car_input - V6.txt";
+    private static final String REGISTRATION_PATTERN = "\\b[A-Z]{2}\\d{2}\\s?[A-Z]{3}\\b";
 
     public static void main(String[] args) {
-        // Define the path to the file
+        List<String> registrationNumbers = extractRegistrationNumbers(FILE_PATH, REGISTRATION_PATTERN);
+        System.out.println("Extracted Registration Numbers:");
+        System.out.println(registrationNumbers);
+    }
 
-        String filePath = "./src/test/java/com/loonycorn/learningselenium/store/car_input - V6.txt";
-
-        // Define the registration number regex pattern
-        String registrationPattern = "\\b[A-Z]{2}\\d{2}\\s?[A-Z]{3}\\b";
-
+    public static List<String> extractRegistrationNumbers(String filePath, String pattern) {
+        List<String> registrationNumbers = new ArrayList<>();
         try {
-            // Read all lines from the file
             String fileContent = Files.readString(Path.of(filePath));
+            Pattern compiledPattern = Pattern.compile(pattern);
+            Matcher matcher = compiledPattern.matcher(fileContent);
 
-            // Compile the pattern and match against the file content
-            Pattern pattern = Pattern.compile(registrationPattern);
-            Matcher matcher = pattern.matcher(fileContent);
-
-            // Loop through and print all matches in "getText" format
-            System.out.println("Extracted Registration Numbers:");
-            List<String> registrationNumbers = new ArrayList<>();
             while (matcher.find()) {
-                String registration = matcher.group();
-                registrationNumbers.add(registration);
+                registrationNumbers.add(matcher.group());
             }
-            System.out.println(registrationNumbers);
-
-
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
+        return registrationNumbers;
     }
 }
