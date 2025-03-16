@@ -46,10 +46,10 @@ public class ComparePageObjectWithOutPut {
         for (String regNumber : registrationNumbers) {
             List<String> carDetails = new ArrayList<>();
 
-            carRegSiteMainPage.clickRegForm(regNumber);
+            carRegSiteMainPage.enterRegistrationNumber(regNumber);
             delay(1000);
             carRegSiteMainPage.clickFirstTitle();
-            carRegSiteMainPage.SubButton();
+            carRegSiteMainPage.clickSubmitButton();
             delay(2000);
 
             try {
