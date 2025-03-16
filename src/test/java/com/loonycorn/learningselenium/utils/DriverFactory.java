@@ -8,10 +8,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.edge.EdgeOptions;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 
 public class DriverFactory {
-
 
     public enum BrowserType {
         CHROME,
@@ -24,17 +26,19 @@ public class DriverFactory {
         switch (browserType) {
             case CHROME:
                 ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--user-data-dir=" + createTempUserDataDir("chrome"));
                 driver = new ChromeDriver(chromeOptions);
                 driver.manage().window().maximize();
-                //driver.manage().timeouts().implicitlyWait(10, java.util.concurrent.TimeUnit.SECONDS);
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); //Implicit wait. Explicit wait is written in NB.
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
                 break;
             case FIREFOX:
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
+                firefoxOptions.addArguments("--profile", createTempUserDataDir("firefox"));
                 driver = new FirefoxDriver(firefoxOptions);
                 break;
             case EDGE:
                 EdgeOptions edgeOptions = new EdgeOptions();
+                edgeOptions.addArguments("--user-data-dir=" + createTempUserDataDir("edge"));
                 driver = new EdgeDriver(edgeOptions);
                 break;
             default:
@@ -42,5 +46,14 @@ public class DriverFactory {
         }
         return driver;
     }
-}
 
+    private static String createTempUserDataDir(String browser) {
+        try {
+            Path tempDir = Files.createTempDirectory(browser + "_user_data");
+            tempDir.toFile().deleteOnExit();
+            return tempDir.toString();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create temporary user data directory", e);
+        }
+    }
+}
