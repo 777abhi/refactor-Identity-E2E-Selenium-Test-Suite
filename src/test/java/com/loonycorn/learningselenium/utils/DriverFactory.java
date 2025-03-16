@@ -26,6 +26,7 @@ public class DriverFactory {
         switch (browserType) {
             case CHROME:
                 ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--headless");
                 chromeOptions.addArguments("--user-data-dir=" + createTempUserDataDir("chrome"));
                 driver = new ChromeDriver(chromeOptions);
                 driver.manage().window().maximize();
@@ -33,11 +34,13 @@ public class DriverFactory {
                 break;
             case FIREFOX:
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
+                firefoxOptions.addArguments("--headless");
                 firefoxOptions.addArguments("--profile", createTempUserDataDir("firefox"));
                 driver = new FirefoxDriver(firefoxOptions);
                 break;
             case EDGE:
                 EdgeOptions edgeOptions = new EdgeOptions();
+                edgeOptions.addArguments("--headless");
                 edgeOptions.addArguments("--user-data-dir=" + createTempUserDataDir("edge"));
                 driver = new EdgeDriver(edgeOptions);
                 break;
