@@ -92,7 +92,7 @@ public class ComparePageObjectWithOutPut {
             System.out.println("Processing registration number: " + regNumbers);
 
             delay(2000);
-            CarRegInformation.clickCarRegInfo();
+            CarRegInformation.getCarRegInfoText();
             String carMake = CarRegInformation.getCarMake();
             String carModel = CarRegInformation.getCarModel();
             String carYear = CarRegInformation.getCarYear();

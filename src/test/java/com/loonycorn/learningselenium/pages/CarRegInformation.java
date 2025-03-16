@@ -7,23 +7,19 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class CarRegInformation {
-    private WebDriver driver;
-
-//    @FindBy(id = "subForm")
-//    private WebElement CarRegInfo;
+    private final WebDriver driver;
 
     @FindBy(css = ".pt-5 tr:nth-child(1) > .td-right")
-    private WebElement CarMake;
+    private WebElement carMake;
 
     @FindBy(css = ".pt-5 tr:nth-child(2) > .td-right")
-    private WebElement CarModel;
+    private WebElement carModel;
 
     @FindBy(css = ".pt-5 tr:nth-child(3) > .td-right")
-    private WebElement CarColour;
+    private WebElement carColour;
 
     @FindBy(css = ".pt-5 tr:nth-child(4) > .td-right")
-    private WebElement CarYear;
-
+    private WebElement carYear;
 
     public CarRegInformation(WebDriver driver) {
         this.driver = driver;
@@ -34,23 +30,24 @@ public class CarRegInformation {
         return driver.getCurrentUrl().contains("report");
     }
 
-    public String clickCarRegInfo() {
-        WebElement CarRegInfo = driver.findElement(By.id("subForm"));
-        return CarRegInfo.getText();
+    public String getCarRegInfoText() {
+        WebElement carRegInfo = driver.findElement(By.id("subForm"));
+        return carRegInfo.getText();
     }
 
     public String getCarMake() {
-        return CarMake.getText();
+        return carMake.getText();
     }
+
     public String getCarModel() {
-        return CarModel.getText();
+        return carModel.getText();
     }
-    public String getCarColour(){
-        return CarColour.getText();
+
+    public String getCarColour() {
+        return carColour.getText();
     }
-    public String getCarYear(){
-        return CarYear.getText();
+
+    public String getCarYear() {
+        return carYear.getText();
     }
-    
-    
 }
