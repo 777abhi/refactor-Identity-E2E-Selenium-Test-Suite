@@ -5,52 +5,48 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static org.openqa.selenium.By.*;
-
 public class CarRegSiteMainPage {
-    private WebDriver driver;
+    private final WebDriver driver;
+
     @FindBy(id = "subForm1")
-    private WebElement RegFormInput;
+    private WebElement regFormInput;
 
     @FindBy(css = "h1.fw-bold.first-title[style*='color: rgb(70, 160, 148)']")
-    private WebElement FirstTitle;
+    private WebElement firstTitle;
 
     @FindBy(css = "button.check-now-button")
-    private WebElement SubmitButton;
+    private WebElement submitButton;
 
     @FindBy(css = "div.alert.alert-danger")
-    private WebElement AlertMessage;
-
-//    RegFormInput.clear();
-//RegFormInput.sendKeys(regNumbers);
-
-
-
+    private WebElement alertMessage;
 
     public CarRegSiteMainPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-    public void clickRegForm(String regNumbers) {
-        RegFormInput.sendKeys(regNumbers);
+
+    public void enterRegistrationNumber(String regNumber) {
+        regFormInput.clear();
+        regFormInput.sendKeys(regNumber);
     }
+
     public void clickFirstTitle() {
-
-        assert(FirstTitle.isDisplayed());
+        if (firstTitle.isDisplayed()) {
+            firstTitle.click();
+        } else {
+            throw new IllegalStateException("First title is not displayed");
+        }
     }
 
-    public void SubButton() {
-        SubmitButton.click();
+    public void clickSubmitButton() {
+        submitButton.click();
     }
+
     public String getAlertMessage() {
-        return AlertMessage.getText();
+        return alertMessage.getText();
     }
 
-//    public boolean isAlertMessageDisplayed() {
-//        return AlertMessage.isDisplayed();
-//    }
-
-        
-
-
+    public boolean isAlertMessageDisplayed() {
+        return alertMessage.isDisplayed();
+    }
 }
